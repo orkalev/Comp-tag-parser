@@ -44,6 +44,8 @@ let rec expr_eq e1 e2 =
                        
 exception X_syntax_error;;
 
+exception X_sexpr of expr;;
+
 module type TAG_PARSER = sig
   val tag_parse_expressions : sexpr list -> expr list
 end;; (* signature TAG_PARSER *)
@@ -56,9 +58,34 @@ let reserved_word_list =
    "quasiquote"; "quote"; "set!"; "pset!"; "unquote";
    "unquote-splicing"];;  
 
-(* work on the tag parser starts here *)
+let rec veriables_not_reserved_word =
+  let tester = List.mem s reserved_word_list in 
+  if tester then raise X_syntax_error else Var(s) in
+  s;;
 
-let tag_parse_expressions sexpr = raise X_not_yet_implemented;;
+let rec tag_parse_exp s = match s with
+  (*constants*)
+  (*need to add the quoted and unquoted*)
+  |Nil -> raise (X_sexpr e)
+  |Bool(expr) -> Const(Sexpr(Bool(expr)))
+  |Char(expr) -> Const(Sexpr(Char(expr)))
+  |Number(expr) -> Const(Sexpr(Number(expr)))
+  |String(expr) -> Const(Sexpr(String(expr)))
+  (*veriables*)
+
+  (*conditionals*)
+
+  
+  (*applications*)
+  (*disjunction*)
+  (*definitions*)
+  (*assignments*)
+  (*sequences*)
+
+
+
+
+let tag_parse_expressions sexpr = tag_paese_exp sexpr;;
 
   
 end;; (* struct Tag_Parser *)
