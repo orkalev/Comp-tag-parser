@@ -85,7 +85,7 @@ let rec tag_parse_exp s = match s with
 
 
 
-let tag_parse_expressions sexpr = tag_paese_exp sexpr;;
+let tag_parse_expressions sexpr = tag_parse_exp sexpr;;
 
   
 end;; (* struct Tag_Parser *)
