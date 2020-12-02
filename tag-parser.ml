@@ -57,11 +57,11 @@ let reserved_word_list =
    "if"; "lambda"; "let"; "let*"; "letrec"; "or";
    "quasiquote"; "quote"; "set!"; "pset!"; "unquote";
    "unquote-splicing"];;  
-
+(*
 let rec veriables_not_reserved_word =
   let tester = List.mem s reserved_word_list in 
   if tester then raise X_syntax_error else Var(s) in
-  s;;
+  s;;*)
 
 let rec tag_parse_exp s = match s with
   (*constants*)
