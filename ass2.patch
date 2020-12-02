@@ -127,7 +127,7 @@ index 0000000..71e574f
 +exit $PROBLEM
 \ No newline at end of file
 diff --git a/tag-parser.ml b/tag-parser.ml
-index 138249e..692c52e 100644
+index 138249e..3cd76f7 100644
 --- a/tag-parser.ml
 +++ b/tag-parser.ml
 @@ -44,6 +44,8 @@ let rec expr_eq e1 e2 =
@@ -173,7 +173,7 @@ index 138249e..692c52e 100644
 -(* work on the tag parser starts here *)
  
 -let tag_parse_expressions sexpr = raise X_not_yet_implemented;;
-+let tag_parse_expressions sexpr = tag_parse_exp sexpr;;
++let tag_parse_expressions sexpr = List.map tag_parse_exp sexpr;;
  
    
  end;; (* struct Tag_Parser *)
