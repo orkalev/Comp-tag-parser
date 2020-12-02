@@ -127,7 +127,7 @@ index 0000000..71e574f
 +exit $PROBLEM
 \ No newline at end of file
 diff --git a/tag-parser.ml b/tag-parser.ml
-index 138249e..1183a9b 100644
+index 138249e..3577f67 100644
 --- a/tag-parser.ml
 +++ b/tag-parser.ml
 @@ -44,6 +44,8 @@ let rec expr_eq e1 e2 =
@@ -152,11 +152,11 @@ index 138249e..1183a9b 100644
 +let rec tag_parse_exp s = match s with
 +  (*constants*)
 +  (*need to add the quoted and unquoted*)
-+  |Nil -> raise (X_sexpr e)
++  |Nil -> raise (X_sexpr s)
 +  |Bool(expr) -> Const(Sexpr(Bool(expr)))
 +  |Char(expr) -> Const(Sexpr(Char(expr)))
 +  |Number(expr) -> Const(Sexpr(Number(expr)))
-+  |String(expr) -> Const(Sexpr(String(expr)))
++  |String(expr) -> Const(Sexpr(String(expr)));;
 +  (*veriables*)
 +
 +  (*conditionals*)

@@ -66,7 +66,7 @@ let rec veriables_not_reserved_word =
 let rec tag_parse_exp s = match s with
   (*constants*)
   (*need to add the quoted and unquoted*)
-  |Nil -> raise (X_sexpr s)
+  |Nil -> Const(Void)
   |Bool(expr) -> Const(Sexpr(Bool(expr)))
   |Char(expr) -> Const(Sexpr(Char(expr)))
   |Number(expr) -> Const(Sexpr(Number(expr)))
