@@ -1,3 +1,6 @@
+diff --git a/ass2.patch b/ass2.patch
+new file mode 100644
+index 0000000..e69de29
 diff --git a/readme.txt b/readme.txt
 index e69de29..26e9dff 100644
 --- a/readme.txt
@@ -124,7 +127,7 @@ index 0000000..71e574f
 +exit $PROBLEM
 \ No newline at end of file
 diff --git a/tag-parser.ml b/tag-parser.ml
-index 138249e..8a30137 100644
+index 138249e..1183a9b 100644
 --- a/tag-parser.ml
 +++ b/tag-parser.ml
 @@ -44,6 +44,8 @@ let rec expr_eq e1 e2 =
@@ -136,15 +139,15 @@ index 138249e..8a30137 100644
  module type TAG_PARSER = sig
    val tag_parse_expressions : sexpr list -> expr list
  end;; (* signature TAG_PARSER *)
-@@ -56,9 +58,34 @@ let reserved_word_list =
+@@ -55,10 +57,35 @@ let reserved_word_list =
+    "if"; "lambda"; "let"; "let*"; "letrec"; "or";
     "quasiquote"; "quote"; "set!"; "pset!"; "unquote";
     "unquote-splicing"];;  
- 
--(* work on the tag parser starts here *)
++(*
 +let rec veriables_not_reserved_word =
 +  let tester = List.mem s reserved_word_list in 
 +  if tester then raise X_syntax_error else Var(s) in
-+  s;;
++  s;;*)
 +
 +let rec tag_parse_exp s = match s with
 +  (*constants*)
@@ -166,7 +169,8 @@ index 138249e..8a30137 100644
 +  (*sequences*)
 +
 +
-+
+ 
+-(* work on the tag parser starts here *)
  
 -let tag_parse_expressions sexpr = raise X_not_yet_implemented;;
 +let tag_parse_expressions sexpr = tag_paese_exp sexpr;;
