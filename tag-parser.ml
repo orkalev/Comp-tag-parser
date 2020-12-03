@@ -79,9 +79,10 @@ let rec tag_parse_exp s = match s with
   |Pair(Symbol("if"), Pair(test, Pair(dit, Pair(dif, Nil)))) -> If((tag_parse_exp test),(tag_parse_exp dit),(tag_parse_exp dif))
   
 (* lambda *)
-  (* |Pair(Symbol ("lambda"), Pair(Pair(car,cdr),body) -> LambdaOpt
-  |Pair(Symbol ("lambda"), Pair(Symbol(s),body)) -> LambdaOpt([],s,body_seq)
-  |Pair(Symbol ("lambda"), Pair(Nil,body)) -> LambdaSimple([],body_seq) *)
+  |Pair(Symbol("lambda"),Pair(_,Nil)) -> raise X_syntax_error
+  |Pair(Symbol("lambda"),Pair(Nil,body)) -> LambdaSimple([],tag_parse_seq body)
+  |Pair(Symbol("lambda"),Pair(Symbol(s),body)) -> LambdaOpt([],s,tag_parse_seq body
+  |Pair(Symbol("lambda"),lambda_expr) -> handle_lambda lambda_expr
   (*disjunction*)
   |Pair(Symbol("or"),Nil) -> Const(Sexpr (Bool false))
   |Pair(Symbol("or"),Pair(car_expr,Nil)) -> Const(Sexpr(car_expr))
@@ -92,6 +93,7 @@ let rec tag_parse_exp s = match s with
   |Pair(Symbol("and"),Pair(car_expr,cdr_expr)) -> If((tag_parse_exp car_expr), (tag_parse_exp (Pair(Symbol("and"),cdr_expr))), Const(Sexpr(Bool false)))
 
   (*definitions*)
+
   (*assignments*)
   (*sequences*)
 
@@ -101,24 +103,54 @@ let rec tag_parse_exp s = match s with
 
   (*TODO:   |_ -> raise X_syntax_error*)
   | _ -> raise X_first_problem
+
   and veriables_not_reserved_word e = 
         let tester = List.mem e reserved_word_list in
           if tester
             then raise X_syntax_error 
             else Var(e)
+
   and list_of_sexpr s = match s with
     | Nil -> []
     | Pair(car,cdr) -> List.append [car] (list_of_sexpr cdr)
     | _ -> raise X_syntax_error
 
+  and handle_lambda lambda_expr = 
+   match lambda_expr with
+    (* |Pair(_,Nil) -> raise X_syntax_error
+    |Pair(Nil,body))-> LambdaSimple([],tag_parse_seq body)
+    |Pair(Symbol(s),body) -> LambdaOpt([],s,tag_parse_seq body)
+    |Pair(Pair(car,cdr),body) -> LambdaOpt *)
+    |Pair(Pair(car,cdr),body) -> 
+      let c_args = List.map string_of_symbol (list_of_sexpr (Pair(car,cdr)) in
+
+
+    
+   
+  and tag_parse_seq body = match body with
+    |Pair(car,Nil) -> tag_parse_exp car
+    |Pair(car,cdr) -> Seq(List.map tag_parse_exp (list_of_sexpr body))
+    |_ -> raise X_syntax_error
+
+  and is_proper_list list = match list with
+    |Nil -> true
+    |pair(car,cdr) -> is_proper_list cdr
+    |_ -> false 
+
+  and string_of_symbol s = match s with
+    |Symbol(e) -> e
+    |_ -> X_syntax_error 
+
+  and dupplicate_tester c_args = match c_args with
+  |[] -> false
+  |car :: cdr ->
+  and cdr_containce_car car cdr = match cdr with
+  |x :: y -> if x = y then true else car y 
+
 
   ;;
 
-(*
-let rec veriables_not_reserved_word =
-  let tester = List.mem s reserved_word_list in 
-  if tester then raise X_syntax_error else Var(s) in
-  s;;*)
+
 let tag_parse_expressions sexpr = List.map tag_parse_exp sexpr;;
 
   
